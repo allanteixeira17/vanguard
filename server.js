@@ -57,7 +57,11 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor da Vanguard rodando na porta ${PORT}`);
-  console.log(`Acesse: http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Servidor da Vanguard rodando na porta ${PORT}`);
+    console.log(`Acesse: http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
