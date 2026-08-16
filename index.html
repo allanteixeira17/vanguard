@@ -1,0 +1,2198 @@
+<!--
+  SISTEMA:    Vanguard Segurança Eletrônica & Tecnologia
+  TELA:       Site Institucional Completo
+  DESIGNER:   Web Designer Sênior
+  STACK:      HTML/CSS/JS vanilla
+  TIPOGRAFIA: Space Grotesk (display) + DM Sans (body)
+  PALETA:     #0A1628, #1A2A44, #00D4FF, #00FF88, #0F1D32, #E8EDF5
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empresa de Segurança Eletrônica e Automação | Vanguard Segurança</title>
+  <meta name="description" content="Há mais de 10 anos protegendo condomínios e empresas. Instalação de câmeras com IA, alarme monitorado 24h, controle de acesso facial e portaria remota. Solicite orçamento gratuito!">
+  <meta name="keywords" content="empresa de segurança eletrônica, instalação de câmeras de segurança para condomínio, sistema de alarme monitorado 24h, controle de acesso facial empresas, portaria remota para condomínios">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================
+       CSS VARIABLES & RESET
+       ========================================== */
+    :root {
+      --primary: #0A1628;
+      --primary-dark: #060E1A;
+      --secondary: #1A2A44;
+      --accent: #00D4FF;
+      --accent-rgb: 0, 212, 255;
+      --accent2: #00FF88;
+      --accent2-rgb: 0, 255, 136;
+      --surface: #0F1D32;
+      --surface-light: #152640;
+      --text: #E8EDF5;
+      --text-secondary: #8899AA;
+      --text-muted: #556677;
+      --border: rgba(255, 255, 255, 0.08);
+      --glow: 0 0 20px rgba(var(--accent-rgb), 0.3);
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --max-width: 1200px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: var(--font-body);
+      background-color: var(--primary);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: var(--accent2); }
+
+    img { max-width: 100%; height: auto; display: block; }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      line-height: 1.2;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+    /* ==========================================
+       SCROLL PROGRESS BAR
+       ========================================== */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      z-index: 10000; width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* ==========================================
+       SCROLL REVEAL
+       ========================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* ==========================================
+       NAVIGATION
+       ========================================== */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(10, 22, 40, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    .nav.scrolled {
+      background: rgba(10, 22, 40, 0.95);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px;
+      max-width: var(--max-width); margin: 0 auto;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display);
+      font-weight: 700; font-size: 1.2rem; color: var(--text);
+    }
+    .nav-logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1.1rem; color: var(--primary);
+    }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: var(--text-secondary); font-size: 0.9rem; font-weight: 500;
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 18px;
+      background: transparent;
+      border: 1px solid rgba(var(--accent-rgb), 0.4);
+      color: var(--accent) !important;
+      border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600;
+      transition: all var(--transition);
+    }
+    .nav-cta:hover {
+      background: rgba(var(--accent-rgb), 0.1);
+      border-color: var(--accent);
+      color: var(--accent) !important;
+    }
+
+    .nav-login {
+      padding: 6px 14px;
+      background: rgba(var(--accent-rgb), 0.08);
+      border: 1px solid rgba(var(--accent-rgb), 0.2);
+      color: var(--accent) !important;
+      border-radius: 6px;
+      font-size: 0.8rem; font-weight: 500;
+    }
+    .nav-login:hover { background: rgba(var(--accent-rgb), 0.15); }
+
+    /* Mobile menu */
+    .nav-toggle {
+      display: none; background: none; border: none; cursor: pointer;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block; width: 24px; height: 2px;
+      background: var(--text); margin: 5px 0;
+      transition: all var(--transition);
+    }
+
+    @media (max-width: 900px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        position: fixed; top: 0; right: -100%;
+        width: 280px; height: 100vh;
+        background: var(--primary-dark);
+        flex-direction: column;
+        padding: 80px 32px 32px;
+        gap: 20px;
+        transition: right var(--transition);
+        border-left: 1px solid var(--border);
+      }
+      .nav-links.open { right: 0; }
+      .nav-links a { font-size: 1rem; }
+    }
+
+    /* ==========================================
+       HERO SECTION
+       ========================================== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 0 80px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: url('assets/images/hero_bg.jpg') center/cover no-repeat;
+    }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(10,22,40,0.95) 0%, rgba(10,22,40,0.7) 100%);
+    }
+    @keyframes heroGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero-blob {
+      position: absolute; width: 600px; height: 600px;
+      top: -100px; right: -150px;
+      background: radial-gradient(circle, rgba(var(--accent-rgb), 0.15) 0%, transparent 70%);
+      border-radius: 42% 58% 65% 35% / 45% 45% 55% 55%;
+      animation: blobMorph 10s ease-in-out infinite;
+      filter: blur(60px);
+      z-index: 1;
+    }
+    .hero-blob-2 {
+      position: absolute; width: 400px; height: 400px;
+      bottom: -100px; left: -100px;
+      background: radial-gradient(circle, rgba(var(--accent2-rgb), 0.1) 0%, transparent 70%);
+      border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%;
+      animation: blobMorph 8s ease-in-out infinite reverse;
+      filter: blur(50px);
+      z-index: 1;
+    }
+    @keyframes blobMorph {
+      0%, 100% { border-radius: 42% 58% 65% 35% / 45% 45% 55% 55%; }
+      50%      { border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%; }
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 720px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px;
+      background: rgba(var(--accent-rgb), 0.1);
+      border: 1px solid rgba(var(--accent-rgb), 0.25);
+      border-radius: 50px;
+      font-size: 0.8rem; font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent2);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      margin-bottom: 20px;
+      letter-spacing: -0.03em;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    }
+    .hero h1 .accent { color: var(--accent); text-shadow: 0 4px 20px rgba(0,212,255,0.4); }
+    .hero-desc {
+      font-size: 1.1rem; color: var(--text-secondary);
+      margin-bottom: 12px; max-width: 600px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+    .hero-slogan {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 36px;
+    }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-family: var(--font-display);
+      font-weight: 600; font-size: 0.95rem;
+      cursor: pointer; border: none;
+      transition: all var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #0099CC);
+      color: var(--primary); 
+      box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.5);
+      color: var(--primary);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(var(--accent-rgb), 0.4);
+      color: var(--accent);
+    }
+    .btn-secondary:hover {
+      background: rgba(var(--accent-rgb), 0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ==========================================
+       AUTHORITY BAR (NÚMEROS)
+       ========================================== */
+    .authority {
+      position: relative; z-index: 2;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 0;
+    }
+    .authority-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+    .authority-item { padding: 16px; }
+    .authority-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem; font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .authority-label {
+      font-size: 0.85rem; color: var(--text-secondary);
+      margin-top: 8px;
+    }
+    @media (max-width: 700px) {
+      .authority-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ==========================================
+       SECTION SHARED STYLES
+       ========================================== */
+    .section { padding: 100px 0; }
+    .section-dark { background: var(--primary-dark); }
+    .section-surface { background: var(--surface); }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 60px;
+    }
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+    }
+
+    /* ==========================================
+       SOLUTIONS GRID
+       ========================================== */
+    .solutions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .solution-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .solution-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .solution-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(var(--accent-rgb), 0.3);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), var(--glow);
+    }
+    .solution-card:hover::before { opacity: 1; }
+    .solution-icon {
+      width: 52px; height: 52px;
+      background: rgba(var(--accent-rgb), 0.1);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      transition: all var(--transition);
+    }
+    .solution-icon svg {
+      width: 26px; height: 26px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.5;
+    }
+    .solution-card:hover .solution-icon {
+      background: rgba(var(--accent-rgb), 0.2);
+      box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.2);
+    }
+    .solution-card h3 {
+      font-size: 1.15rem; margin-bottom: 12px;
+    }
+    .solution-card p {
+      color: var(--text-secondary); font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    /* ==========================================
+       ABOUT / QUEM SOMOS
+       ========================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-content h2 {
+      font-size: clamp(1.8rem, 3vw, 2.3rem);
+      margin-bottom: 20px;
+    }
+    .about-content p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+    }
+    .about-certs {
+      display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap;
+    }
+    .cert-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px;
+      background: rgba(var(--accent-rgb), 0.08);
+      border: 1px solid rgba(var(--accent-rgb), 0.2);
+      border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600; color: var(--accent);
+    }
+    .about-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .about-stat {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px;
+      background: rgba(var(--accent-rgb), 0.05);
+      border-radius: var(--radius);
+    }
+    .about-stat-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(var(--accent-rgb), 0.12);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-stat-icon svg {
+      width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.5;
+    }
+    .about-stat strong { display: block; color: var(--text); font-size: 0.95rem; }
+    .about-stat span { font-size: 0.8rem; color: var(--text-secondary); }
+    
+    @media (max-width: 800px) {
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ==========================================
+       DIFFERENTIALS
+       ========================================== */
+    .diff-list { 
+      max-width: 800px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .diff-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: all var(--transition);
+    }
+    .diff-item:hover {
+      border-color: rgba(var(--accent-rgb), 0.3);
+      transform: translateX(4px);
+    }
+    .diff-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(var(--accent-rgb), 0.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .diff-icon svg {
+      width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 1.5;
+    }
+    .diff-item strong { color: var(--text); display: block; margin-bottom: 4px; }
+    .diff-item p { color: var(--text-secondary); font-size: 0.9rem; margin: 0; }
+
+    /* ==========================================
+       SEGMENTS
+       ========================================== */
+    .segments-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .segment-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 0;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .segment-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      border-color: rgba(var(--accent-rgb), 0.3);
+    }
+    .segment-img {
+      height: 180px;
+      background: linear-gradient(135deg, var(--secondary), var(--surface-light));
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .segment-img svg {
+      width: 60px; height: 60px;
+      stroke: var(--accent); fill: none; stroke-width: 1;
+      opacity: 0.5;
+    }
+    .segment-body { padding: 28px; }
+    .segment-body h3 {
+      font-size: 1.15rem; margin-bottom: 12px;
+    }
+    .segment-body p {
+      color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .segment-link {
+      font-size: 0.85rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    @media (max-width: 800px) {
+      .segments-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ==========================================
+       FORM / ORÇAMENTO
+       ========================================== */
+    .form-section {
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      position: relative;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .form-content h2 {
+      font-size: clamp(1.8rem, 3vw, 2.3rem);
+      margin-bottom: 16px;
+    }
+    .form-content p {
+      color: var(--text-secondary); font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+    .form-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-secondary); margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      transition: all var(--transition);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
+    }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    .form-group select { cursor: pointer; }
+    .form-group select option { background: var(--primary); color: var(--text); }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--accent), #0099CC);
+      color: var(--primary);
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.4);
+    }
+
+    @media (max-width: 800px) {
+      .form-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ==========================================
+       FAQ
+       ========================================== */
+    .faq-list {
+      max-width: 800px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+    .faq-item.active { border-color: rgba(var(--accent-rgb), 0.3); }
+    .faq-question {
+      width: 100%; padding: 20px 24px;
+      background: none; border: none;
+      color: var(--text);
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+    }
+    .faq-question:hover { color: var(--accent); }
+    .faq-chevron {
+      width: 20px; height: 20px; flex-shrink: 0;
+      transition: transform var(--transition);
+    }
+    .faq-item.active .faq-chevron { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      padding: 0 24px;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding: 0 24px 20px;
+    }
+    .faq-answer p {
+      color: var(--text-secondary); font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    /* ==========================================
+       CONTACT / FOOTER
+       ========================================== */
+    .footer {
+      background: var(--primary-dark);
+      border-top: 1px solid var(--border);
+      padding: 80px 0 40px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+    .footer-brand p {
+      color: var(--text-secondary); font-size: 0.9rem;
+      margin: 16px 0;
+      max-width: 300px;
+    }
+    .footer-social {
+      display: flex; gap: 12px; margin-top: 16px;
+    }
+    .footer-social a {
+      width: 40px; height: 40px;
+      background: rgba(var(--accent-rgb), 0.08);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+    }
+    .footer-social a:hover {
+      background: rgba(var(--accent-rgb), 0.15);
+      border-color: var(--accent);
+    }
+    .footer-social a svg {
+      width: 18px; height: 18px;
+      fill: var(--text-secondary);
+    }
+    .footer-col h4 {
+      font-size: 0.9rem; font-weight: 600;
+      margin-bottom: 20px; color: var(--text);
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a {
+      color: var(--text-secondary); font-size: 0.88rem;
+      transition: color var(--transition);
+    }
+    .footer-col ul a:hover { color: var(--accent); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-bottom p {
+      color: var(--text-muted); font-size: 0.8rem;
+    }
+    @media (max-width: 800px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ==========================================
+       WHATSAPP FLOATING BUTTON
+       ========================================== */
+    .whatsapp-float {
+      position: fixed; bottom: 24px; right: 24px;
+      z-index: 9000;
+      width: 60px; height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      cursor: pointer;
+      transition: all var(--transition);
+      animation: whatsappPulse 2s infinite;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+    }
+    .whatsapp-float svg { width: 30px; height: 30px; fill: white; }
+    @keyframes whatsappPulse {
+      0% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+      50% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4), 0 0 0 10px rgba(37, 211, 102, 0.1); }
+      100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+    }
+
+    /* ==========================================
+       SECTION SPECIFIC ADJUSTMENTS
+       ========================================== */
+    .central-section {
+      padding: 60px 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .central-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .central-inner p {
+      color: var(--text-secondary); font-size: 0.95rem;
+      max-width: 600px;
+    }
+
+
+    /* ==========================================
+       REUSABLE GRID SYSTEM
+       ========================================== */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    @media (max-width: 900px) { .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+    /* ==========================================
+       SCROLL SPY ACTIVE LINK
+       ========================================== */
+    .nav-links a.active { color: var(--accent) !important; }
+    .nav-links a.active::after { width: 100%; background: var(--accent); }
+
+    /* ==========================================
+       HAMBURGER X ANIMATION
+       ========================================== */
+    .nav-toggle span { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: center; }
+    .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-toggle.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ==========================================
+       WHATSAPP TOOLTIP
+       ========================================== */
+    .whatsapp-float { position: relative; }
+    .whatsapp-tooltip {
+      position: absolute; right: 70px; top: 50%;
+      transform: translateY(-50%) translateX(10px);
+      background: #fff; color: #333;
+      padding: 8px 16px; border-radius: 8px;
+      font-family: var(--font-display);
+      font-size: 0.85rem; font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      opacity: 0; pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    .whatsapp-tooltip::after {
+      content: ''; position: absolute;
+      right: -6px; top: 50%; transform: translateY(-50%);
+      border: 6px solid transparent; border-left-color: #fff;
+    }
+    .whatsapp-float:hover .whatsapp-tooltip {
+      opacity: 1; transform: translateY(-50%) translateX(0);
+    }
+
+    /* ==========================================
+       MODAL
+       ========================================== */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      z-index: 11000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px; max-width: 620px; width: 92%;
+      max-height: 80vh; overflow-y: auto;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s ease;
+    }
+    .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+    .modal-close {
+      float: right; background: none; border: none;
+      color: var(--text-secondary); cursor: pointer;
+      font-size: 1.5rem; line-height: 1;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px; transition: all var(--transition);
+    }
+    .modal-close:hover { color: var(--accent); background: rgba(var(--accent-rgb), 0.1); }
+    .modal h3 { font-size: 1.3rem; margin-bottom: 20px; padding-right: 40px; }
+    .modal p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 12px; line-height: 1.7; }
+    .modal ul { color: var(--text-secondary); font-size: 0.9rem; margin: 12px 0; padding-left: 20px; line-height: 1.7; }
+    .modal ul li { margin-bottom: 6px; }
+
+    /* ==========================================
+       FORM VALIDATION
+       ========================================== */
+    .form-group input.invalid,
+    .form-group select.invalid,
+    .form-group textarea.invalid {
+      border-color: #FF4D6A;
+      box-shadow: 0 0 0 3px rgba(255,77,106,0.1);
+    }
+    .form-group input.valid,
+    .form-group select.valid,
+    .form-group textarea.valid {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 3px rgba(var(--accent2-rgb), 0.1);
+    }
+    .form-error {
+      color: #FF4D6A; font-size: 0.78rem;
+      margin-top: 6px; display: none;
+    }
+    .form-error.show { display: block; }
+    .form-success {
+      text-align: center; padding: 40px 20px; display: none;
+    }
+    .form-success.show { display: block; }
+    .form-success .success-icon {
+      width: 64px; height: 64px; margin: 0 auto 16px;
+      background: rgba(var(--accent2-rgb), 0.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .form-success .success-icon svg {
+      width: 32px; height: 32px;
+      stroke: var(--accent2); fill: none; stroke-width: 2;
+    }
+    .form-success h3 { color: var(--accent2); margin-bottom: 8px; }
+    .form-success p { color: var(--text-secondary); font-size: 0.95rem; }
+
+    /* ==========================================
+       GALLERY / PROJETOS
+       ========================================== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .gallery-item {
+      position: relative; border-radius: var(--radius);
+      overflow: hidden; height: 280px; cursor: pointer;
+    }
+    .gallery-item-bg {
+      position: absolute; inset: 0;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:nth-child(1) .gallery-item-bg { background: url('assets/images/proj_condominio.jpg') center/cover no-repeat; }
+    .gallery-item:nth-child(2) .gallery-item-bg { background: url('assets/images/proj_empresarial.jpg') center/cover no-repeat; }
+    .gallery-item:nth-child(3) .gallery-item-bg { background: url('assets/images/proj_industria.jpg') center/cover no-repeat; }
+    .gallery-item:nth-child(4) .gallery-item-bg { background: url('assets/images/proj_residencia.jpg') center/cover no-repeat; }
+    .gallery-item-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2300D4FF' fill-opacity='0.04'%3E%3Cpath d='M0 0h20v20H0zM20 20h20v20H20z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .gallery-item:hover .gallery-item-bg { transform: scale(1.08); }
+    .gallery-item-icon {
+      position: absolute; top: 45%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px; height: 80px;
+      background: rgba(var(--accent-rgb), 0.1);
+      border: 1px solid rgba(var(--accent-rgb), 0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.4s ease;
+    }
+    .gallery-item-icon svg {
+      width: 34px; height: 34px;
+      stroke: var(--accent); fill: none; stroke-width: 1.2; opacity: 0.6;
+    }
+    .gallery-item:hover .gallery-item-icon {
+      background: rgba(var(--accent-rgb), 0.2);
+      box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.3);
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+    .gallery-item:hover .gallery-item-icon svg { opacity: 1; }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,22,40,0.95) 0%, rgba(10,22,40,0.4) 40%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 24px;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay h4 { font-size: 1rem; margin-bottom: 4px; color: var(--text); }
+    .gallery-overlay span {
+      font-size: 0.78rem; color: var(--accent); font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .gallery-grid { grid-template-columns: 1fr; } .gallery-item { height: 220px; } }
+
+    /* ==========================================
+       ENHANCED SEGMENT IMAGES
+       ========================================== */
+    .segment-img-enhanced {
+      height: 180px; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .segment-img-enhanced::before {
+      content: ''; position: absolute; inset: 0; opacity: 0.5;
+    }
+    .segment-img-enhanced::after {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%2300D4FF' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .segment-icon-wrap {
+      position: relative; z-index: 1;
+      width: 80px; height: 80px;
+      background: rgba(var(--accent-rgb), 0.12);
+      border: 1px solid rgba(var(--accent-rgb), 0.2);
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+    }
+    .segment-card:hover .segment-icon-wrap {
+      background: rgba(var(--accent-rgb), 0.2);
+      box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.25);
+      transform: scale(1.08);
+    }
+    .segment-img-enhanced svg {
+      width: 36px; height: 36px;
+      stroke: var(--accent); fill: none; stroke-width: 1.2;
+    }
+    .segment-condo::before { background: linear-gradient(135deg, #0A2A4A, #1A3A5A); }
+    .segment-empresa::before { background: linear-gradient(135deg, #1A2A44, #0F3D5E); }
+    .segment-resi::before { background: linear-gradient(135deg, #152640, #1E4060); }
+
+    /* ==========================================
+       FOOTER MINI FORM
+       ========================================== */
+    .footer-mini-form { margin-top: 20px; }
+    .footer-mini-form input,
+    .footer-mini-form textarea {
+      width: 100%; padding: 10px 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: var(--font-body); font-size: 0.85rem;
+      margin-bottom: 8px; transition: all var(--transition);
+    }
+    .footer-mini-form input:focus,
+    .footer-mini-form textarea:focus {
+      outline: none; border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
+    }
+    .footer-mini-form textarea { min-height: 60px; resize: vertical; }
+    .footer-mini-form button {
+      width: 100%; padding: 10px;
+      background: rgba(var(--accent-rgb), 0.12);
+      border: 1px solid rgba(var(--accent-rgb), 0.3);
+      border-radius: 8px; color: var(--accent);
+      font-family: var(--font-display);
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: all var(--transition);
+    }
+    .footer-mini-form button:hover {
+      background: rgba(var(--accent-rgb), 0.22);
+      border-color: var(--accent);
+    }
+
+    /* ==========================================
+       CHATBOT IA (FRONTEND)
+       ========================================== */
+    .ai-chatbot-container {
+      position: fixed;
+      bottom: 90px; /* Acima do whatsapp */
+      right: 20px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    
+    .ai-chatbot-fab {
+      width: 55px; height: 55px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent) 0%, #008ebf 100%);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 15px rgba(0,212,255,0.4);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .ai-chatbot-fab:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0,212,255,0.6);
+    }
+    
+    .ai-chatbot-fab svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; }
+    
+    .ai-chatbot-window {
+      width: 350px;
+      height: 450px;
+      background: rgba(10, 22, 40, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    
+    .ai-chatbot-window.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+    
+    .ai-chatbot-header {
+      padding: 15px;
+      background: linear-gradient(to right, rgba(0, 212, 255, 0.1), transparent);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .ai-header-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .ai-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(0, 212, 255, 0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+    }
+    .ai-avatar svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+    
+    .ai-header-info h4 { font-size: 0.95rem; color: var(--text); margin-bottom: 2px; }
+    .ai-header-info span { font-size: 0.75rem; color: var(--accent); display: flex; align-items: center; gap: 4px; }
+    .ai-header-info span::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; box-shadow: 0 0 5px var(--accent); }
+    
+    .ai-close-btn {
+      background: transparent; border: none; color: var(--text-secondary);
+      font-size: 1.5rem; cursor: pointer; transition: color 0.2s;
+    }
+    .ai-close-btn:hover { color: white; }
+    
+    .ai-chatbot-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .ai-message {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+    .ai-message p { margin: 0 0 8px 0; }
+    .ai-message p:last-child { margin-bottom: 0; }
+    .ai-message ul { margin: 4px 0; padding-left: 16px; }
+    .ai-message li { margin-bottom: 4px; }
+    .ai-message { word-wrap: break-word; }
+    
+    .ai-bot {
+      background: rgba(255, 255, 255, 0.05);
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .ai-user {
+      background: rgba(0, 212, 255, 0.15);
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+      color: var(--text);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+    }
+    
+    .ai-chatbot-input-area {
+      padding: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0,0,0,0.2);
+    }
+    
+    #aiChatbotForm {
+      display: flex;
+      gap: 8px;
+    }
+    
+    #aiChatbotInput {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 10px 15px;
+      color: var(--text);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    
+    #aiChatbotInput:focus {
+      border-color: var(--accent);
+    }
+    
+    #aiChatbotSendBtn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    #aiChatbotSendBtn:hover {
+      background: #00b4d8;
+    }
+    #aiChatbotSendBtn svg { stroke: currentColor; fill: none; stroke-width: 2; }
+    
+    .ai-loading .dot {
+      display: inline-block; width: 6px; height: 6px; background: var(--text-secondary); border-radius: 50%; margin-right: 4px; animation: aiBlink 1.4s infinite both;
+    }
+    .ai-loading .dot:nth-child(2) { animation-delay: 0.2s; }
+    .ai-loading .dot:nth-child(3) { animation-delay: 0.4s; }
+    
+    @keyframes aiBlink { 0%, 80%, 100% { opacity: 0; } 40% { opacity: 1; } }
+
+    .ai-whatsapp-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #25D366; color: white; text-decoration: none;
+      padding: 6px 12px; border-radius: 6px; margin-top: 8px;
+      font-weight: 600; font-size: 0.8rem; transition: background 0.3s;
+    }
+    .ai-whatsapp-btn:hover { background: #1ebd5a; }
+
+    @media (max-width: 500px) {
+      .ai-chatbot-window {
+        width: calc(100vw - 40px);
+        height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- ==========================================
+       NAVIGATION
+       ========================================== -->
+  <nav class="nav" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">V</div>
+        <span>Vanguard</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#sobre">Quem Somos</a></li>
+        <li><a href="#solucoes">Soluções</a></li>
+        <li><a href="#segmentos">Segmentos</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contato">Contato</a></li>
+        <li><a href="#" class="nav-login">Central do Assinante</a></li>
+        <li><a href="#orcamento" class="nav-cta">Solicitar Orçamento</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       HERO
+       ========================================== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-blob"></div>
+    <div class="hero-blob-2"></div>
+    <div class="container hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Há mais de 10 anos protegendo patrimônios
+      </div>
+      <h1>Empresa de <span class="accent">Segurança Eletrônica</span> com Inteligência Artificial para Condomínios e Empresas</h1>
+      <p class="hero-desc">Todos os dias, condomínios e empresas enfrentam invasões, falhas em sistemas ultrapassados e perdas patrimoniais. A Vanguard desenvolve projetos sob medida que previnem esses problemas antes mesmo de acontecerem.</p>
+      <p class="hero-slogan">"Tecnologia avançada que protege o que realmente importa."</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/5584988880000?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20projetos%20de%20segurança%20da%20Vanguard." class="btn btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.612.616l4.529-1.48A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.587l-.376-.232-3.898 1.275 1.287-3.834-.254-.402A9.935 9.935 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          Falar com um Especialista
+        </a>
+        <a href="#orcamento" class="btn btn-secondary">Solicitar Orçamento Gratuito</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       AUTHORITY BAR
+       ========================================== -->
+  <section class="authority">
+    <div class="container">
+      <div class="authority-grid">
+        <div class="authority-item reveal">
+          <div class="authority-number" data-count="10">0</div>
+          <div class="authority-label">Anos de experiência</div>
+        </div>
+        <div class="authority-item reveal reveal-delay-1">
+          <div class="authority-number">Intelbras</div>
+          <div class="authority-label">Certificação oficial</div>
+        </div>
+        <div class="authority-item reveal reveal-delay-2">
+          <div class="authority-number" data-count="4" data-suffix="h">0</div>
+          <div class="authority-label">SLA de emergência</div>
+        </div>
+        <div class="authority-item reveal reveal-delay-3">
+          <div class="authority-number" data-count="12">0</div>
+          <div class="authority-label">Meses de garantia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SOLUÇÕES
+       ========================================== -->
+  <section class="section" id="solucoes">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Nossas Soluções</span>
+        <h2>Soluções Inteligentes de Segurança Eletrônica</h2>
+        <p>Cada projeto começa com uma análise de vulnerabilidade. A partir dela, dimensionamos o sistema ideal — sem excessos e sem lacunas.</p>
+      </div>
+      <div class="solutions-grid">
+        <!-- CFTV -->
+        <div class="solution-card reveal">
+          <div class="solution-icon">
+            <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+          <h3>Instalação de Câmeras (CFTV)</h3>
+          <p>Câmeras IP, analógicas e com inteligência artificial. Tenha controle visual total do seu patrimônio com imagens em alta definição, de qualquer lugar, pelo celular.</p>
+        </div>
+        <!-- Alarme -->
+        <div class="solution-card reveal reveal-delay-1">
+          <div class="solution-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Alarme Monitorado 24h</h3>
+          <p>Proteção ininterrupta contra intrusões. Nossa central detecta alertas e aciona pronta resposta tática em minutos, antes que qualquer dano aconteça.</p>
+        </div>
+        <!-- Controle de Acesso -->
+        <div class="solution-card reveal reveal-delay-2">
+          <div class="solution-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>Controle de Acesso Facial</h3>
+          <p>Saiba quem entra e sai sem filas e sem falhas humanas. Reconhecimento facial de alta precisão com relatórios automáticos de acesso.</p>
+        </div>
+        <!-- Portaria Remota -->
+        <div class="solution-card reveal reveal-delay-3">
+          <div class="solution-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3>Portaria Remota</h3>
+          <p>Reduza custos com portaria física sem abrir mão da segurança. Nossa central gerencia acessos 24/7 com câmeras HD e interfone digital.</p>
+        </div>
+        <!-- Cercas -->
+        <div class="solution-card reveal">
+          <div class="solution-icon">
+            <svg viewBox="0 0 24 24"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3>Cercas Elétricas e Concertinas</h3>
+          <p>Proteção perimetral que inibe invasões antes de acontecerem, integrada ao alarme monitorado para resposta imediata.</p>
+        </div>
+        <!-- Automação -->
+        <div class="solution-card reveal reveal-delay-1">
+          <div class="solution-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Automação de Portões</h3>
+          <p>Portões automatizados com controle remoto, acionamento por app e integração com controle de acesso. Praticidade e segurança.</p>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top: 48px;" class="reveal">
+        <a href="#orcamento" class="btn btn-primary">Solicitar Orçamento para Minha Solução</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       QUEM SOMOS
+       ========================================== -->
+  <section class="section section-dark" id="sobre">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content reveal">
+          <span class="section-label">Quem Somos</span>
+          <h2>A Vanguard Segurança Eletrônica & Tecnologia</h2>
+          <p>Fundada pelo Eng. Marcos Vinícius, a Vanguard é referência em integração de tecnologia para proteção patrimonial. Há mais de 10 anos, desenvolvemos projetos personalizados para condomínios, indústrias, comércios e residências.</p>
+          <p>Nossa equipe de engenheiros e técnicos especializados combina equipamentos de última geração com inteligência artificial e suporte técnico dedicado. Acreditamos que segurança não é gasto — é investimento.</p>
+          <p>Cada projeto é dimensionado com precisão, sem equipamentos desnecessários e sem pontos cegos. Nosso compromisso: a solução certa, no prazo certo, com acompanhamento do início ao fim.</p>
+          <div class="about-certs">
+            <span class="cert-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Intelbras
+            </span>
+            <span class="cert-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Hikvision
+            </span>
+            <span class="cert-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              LGPD
+            </span>
+          </div>
+        </div>
+        <div class="about-visual reveal reveal-delay-2">
+          <div class="about-stat">
+            <div class="about-stat-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <strong>SLA de 4 horas</strong>
+              <span>Atendimento de emergência</span>
+            </div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <strong>Garantia de 12 meses</strong>
+              <span>Em todos os equipamentos</span>
+            </div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-icon">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div>
+              <strong>Equipe de Engenheiros</strong>
+              <span>Projetos dimensionados com precisão</span>
+            </div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div>
+              <strong>Monitoramento 24/7</strong>
+              <span>Central de atendimento ininterrupta</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       DIFERENCIAIS
+       ========================================== -->
+  <section class="section" id="diferenciais">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Diferenciais</span>
+        <h2>Por que Escolher a Vanguard?</h2>
+        <p>Existem dezenas de empresas no mercado. Mas poucas entregam o que a Vanguard oferece.</p>
+      </div>
+      <div class="diff-list">
+        <div class="diff-item reveal">
+          <div class="diff-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div>
+            <strong>Projetos dimensionados por engenheiros</strong>
+            <p>Cada sistema é projetado para as vulnerabilidades específicas do seu imóvel — nada de pacotes genéricos.</p>
+          </div>
+        </div>
+        <div class="diff-item reveal reveal-delay-1">
+          <div class="diff-icon">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div>
+            <strong>Tecnologia de ponta com IA</strong>
+            <p>Câmeras com detecção inteligente de movimento, reconhecimento facial e alertas em tempo real no seu celular.</p>
+          </div>
+        </div>
+        <div class="diff-item reveal reveal-delay-2">
+          <div class="diff-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <strong>Suporte técnico com SLA de 4 horas</strong>
+            <p>Quando a emergência acontece, nossa equipe já está a caminho — sem burocracia, sem espera.</p>
+          </div>
+        </div>
+        <div class="diff-item reveal reveal-delay-3">
+          <div class="diff-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <strong>Certificação Intelbras e Hikvision</strong>
+            <p>Equipamentos homologados, com garantia de fábrica e rastreabilidade total.</p>
+          </div>
+        </div>
+        <div class="diff-item reveal reveal-delay-4">
+          <div class="diff-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <strong>Conformidade com a LGPD</strong>
+            <p>Sistemas de câmera e dados de acesso seguem rigorosamente a Lei Geral de Proteção de Dados.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SEGMENTOS
+       ========================================== -->
+  <section class="section section-dark" id="segmentos">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Segmentos</span>
+        <h2>Projetos Personalizados para Cada Perfil</h2>
+        <p>Cada tipo de imóvel tem desafios únicos. Por isso, desenvolvemos soluções sob medida para cada segmento.</p>
+      </div>
+      <div class="segments-grid">
+        <!-- Condomínios -->
+        <div class="segment-card reveal">
+          <div class="segment-img-enhanced segment-condo">
+            <div class="segment-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+          </div>
+          <div class="segment-body">
+            <h3>Segurança para Condomínios</h3>
+            <p>Portaria remota, controle de acesso facial, CFTV com monitoramento 24h e cercas perimetrais. Menos custos, mais segurança e relatórios de acesso para o conselho.</p>
+            <p>Síndicos e administradoras ganham controle total sobre visitantes e prestadores, sem depender de portaria presencial.</p>
+            <a href="#orcamento" class="segment-link">Solicitar cotação →</a>
+          </div>
+        </div>
+        <!-- Empresas -->
+        <div class="segment-card reveal reveal-delay-1">
+          <div class="segment-img-enhanced segment-empresa">
+            <div class="segment-icon-wrap">
+              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+          </div>
+          <div class="segment-body">
+            <h3>Segurança para Empresas</h3>
+            <p>Sistemas robustos de CFTV com IA, alarmes monitorados e controle de acesso facial. Análise de vulnerabilidade feita por engenheiros e suporte técnico com SLA de 4h.</p>
+            <p>De escritórios comerciais a galpões industriais — cada projeto protege seus colaboradores e previne perdas.</p>
+            <a href="#orcamento" class="segment-link">Solicitar cotação →</a>
+          </div>
+        </div>
+        <!-- Residências -->
+        <div class="segment-card reveal reveal-delay-2">
+          <div class="segment-img-enhanced segment-resi">
+            <div class="segment-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+          </div>
+          <div class="segment-body">
+            <h3>Segurança para Residências</h3>
+            <p>Sistemas fáceis de operar, discretos e conectados ao seu celular. Monitore sua casa de onde estiver, a qualquer hora do dia.</p>
+            <p>Câmeras, alarmes com sensor de presença, cercas elétricas e automação de portões com qualidade corporativa.</p>
+            <a href="#orcamento" class="segment-link">Solicitar cotação →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       GALERIA DE PROJETOS
+       ========================================== -->
+  <section class="section" id="projetos">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Portfólio</span>
+        <h2>Projetos Recentes</h2>
+        <p>Conheça alguns dos projetos executados pela nossa equipe de engenheiros para condomínios e empresas de alto padrão.</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item reveal">
+          <div class="gallery-item-bg"></div>
+          <div class="gallery-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="gallery-overlay">
+            <h4>Condomínio Reserva Premium</h4>
+            <span>Portaria Remota + CFTV</span>
+          </div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1">
+          <div class="gallery-item-bg"></div>
+          <div class="gallery-item-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div class="gallery-overlay">
+            <h4>Centro Empresarial Sul</h4>
+            <span>Controle de Acesso Facial</span>
+          </div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2">
+          <div class="gallery-item-bg"></div>
+          <div class="gallery-item-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div class="gallery-overlay">
+            <h4>Indústria Tech</h4>
+            <span>Alarme Monitorado 24h</span>
+          </div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3">
+          <div class="gallery-item-bg"></div>
+          <div class="gallery-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="gallery-overlay">
+            <h4>Residência Alpha</h4>
+            <span>Automação e Câmeras IP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FORMULÁRIO DE ORÇAMENTO
+       ========================================== -->
+  <section class="section form-section" id="orcamento">
+    <div class="container">
+      <div class="form-grid">
+        <div class="form-content reveal">
+          <span class="section-label">Orçamento</span>
+          <h2>Solicite seu Orçamento Gratuito de Segurança Eletrônica</h2>
+          <p>Preencha o formulário com seus dados e o tipo do seu imóvel. Nossos engenheiros entrarão em contato em até 24 horas úteis para apresentar a solução ideal — sem compromisso.</p>
+          <div style="margin-top: 24px;">
+            <div class="about-stat" style="margin-bottom: 12px;">
+              <div class="about-stat-icon">
+                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <strong>(84) 3333-0000</strong>
+                <span>Telefone comercial</span>
+              </div>
+            </div>
+            <div class="about-stat">
+              <div class="about-stat-icon" style="background: rgba(37, 211, 102, 0.12);">
+                <svg viewBox="0 0 24 24" style="stroke: #25D366;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              </div>
+              <div>
+                <strong>(84) 98888-0000</strong>
+                <span>WhatsApp comercial</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-wrapper reveal reveal-delay-2">
+          <form id="formOrcamento" novalidate>
+            <div class="form-group">
+              <label for="nome">Nome completo</label>
+              <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+              <span class="form-error">Por favor, insira seu nome completo.</span>
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+              <span class="form-error">E-mail inválido.</span>
+            </div>
+            <div class="form-group">
+              <label for="telefone">Telefone / WhatsApp</label>
+              <input type="tel" id="telefone" name="telefone" placeholder="(84) 99999-0000" required>
+              <span class="form-error">Telefone inválido.</span>
+            </div>
+            <div class="form-group">
+              <label for="tipo-imovel">Tipo de Imóvel</label>
+              <select id="tipo-imovel" name="tipo-imovel" required>
+                <option value="" disabled selected>Selecione o tipo de imóvel</option>
+                <option value="residencial">Residencial</option>
+                <option value="comercial">Comercial / Empresarial</option>
+                <option value="condominio">Condomínio</option>
+                <option value="industrial">Industrial</option>
+              </select>
+              <span class="form-error">Selecione o tipo de imóvel.</span>
+            </div>
+            <div class="form-group">
+              <label for="mensagem">Conte-nos sobre sua necessidade</label>
+              <textarea id="mensagem" name="mensagem" placeholder="Descreva brevemente o que você precisa..."></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Solicitar Meu Orçamento Gratuito</button>
+            <div id="formSuccess" class="form-success">
+              <div class="success-icon">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <h3>Orçamento Solicitado!</h3>
+              <p>Nossos engenheiros entrarão em contato em até 24h.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FAQ
+       ========================================== -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">FAQ</span>
+        <h2>Perguntas Frequentes sobre Segurança Eletrônica</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Qual é o tempo de garantia dos equipamentos instalados?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Todos os equipamentos instalados pela nossa equipe possuem garantia contratual de 12 meses. Utilizamos apenas equipamentos homologados de fabricantes como Intelbras e Hikvision, que oferecem garantia adicional de fábrica.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Como funciona o suporte técnico em caso de emergência?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Nosso SLA de atendimento técnico para emergências é de até 4 horas. Ao identificar uma falha crítica, nossa equipe técnica já estará no local para resolver o problema no menor tempo possível.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            A Vanguard atende às normas da LGPD?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Sim. Possuímos Política de Privacidade em conformidade com a LGPD quanto ao tratamento de dados pessoais e imagens captadas pelos nossos sistemas. Orientamos nossos clientes sobre sinalização adequada e armazenamento seguro.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Qual a diferença entre câmera IP e câmera analógica?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Câmeras IP transmitem vídeo via rede de dados, oferecendo maior resolução, acesso remoto pelo celular e IA embarcada. Câmeras analógicas são mais simples e de menor custo. Nossos engenheiros orientam a melhor opção para cada caso.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Como funciona a portaria remota? É segura?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>A portaria remota substitui o porteiro físico por uma central que controla entradas e saídas via câmeras, interfone digital e controle de acesso. Opera 24 horas sem pausas e mantém registro completo de todos os acessos.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            A Vanguard instala cercas elétricas e concertinas?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Sim. Instalamos cercas elétricas e concertinas em conformidade com as normas de segurança, integradas ao sistema de alarme monitorado para alerta imediato na central.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Posso monitorar as câmeras pelo celular?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Sim. Todos os nossos projetos de CFTV com câmeras IP incluem acesso remoto via aplicativo. Visualize câmeras em tempo real, revise gravações e receba alertas de detecção de movimento de qualquer lugar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="footer" id="contato">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo">
+            <div class="nav-logo-icon">V</div>
+            <span>Vanguard</span>
+          </a>
+          <p>Tecnologia avançada que protege o que realmente importa. Há mais de 10 anos integrando soluções de segurança eletrônica para condomínios e empresas.</p>
+          <div class="footer-social">
+            <a href="https://instagram.com/vanguardseguranca" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://linkedin.com/company/vanguardseguranca" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://facebook.com/vanguardseguranca" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Soluções</h4>
+          <ul>
+            <li><a href="#solucoes">CFTV</a></li>
+            <li><a href="#solucoes">Alarme 24h</a></li>
+            <li><a href="#solucoes">Controle de Acesso</a></li>
+            <li><a href="#solucoes">Portaria Remota</a></li>
+            <li><a href="#solucoes">Cercas Elétricas</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Segmentos</h4>
+          <ul>
+            <li><a href="#segmentos">Condomínios</a></li>
+            <li><a href="#segmentos">Empresas</a></li>
+            <li><a href="#segmentos">Residências</a></li>
+            <li><a href="#segmentos">Indústrias</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <ul>
+            <li><a href="tel:8433330000">(84) 3333-0000</a></li>
+            <li><a href="https://wa.me/5584988880000">(84) 98888-0000</a></li>
+            <li><a href="mailto:contato@vanguardseguranca.com.br">contato@vanguardseguranca.com.br</a></li>
+          </ul>
+          <form class="footer-mini-form" onsubmit="alert('Mensagem enviada com sucesso!'); return false;">
+            <input type="text" placeholder="Seu nome" required>
+            <input type="email" placeholder="Seu e-mail" required>
+            <textarea placeholder="Sua mensagem" required></textarea>
+            <button type="submit">Enviar Mensagem Rápida</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Vanguard Segurança Eletrônica & Tecnologia — Eng. Marcos Vinícius. Todos os direitos reservados.</p>
+        <p>Política de Privacidade em conformidade com a LGPD. <a href="#" id="openModal" style="color:var(--accent);">Ler Política</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       WHATSAPP FLOATING BUTTON
+       ========================================== -->
+  <a href="https://wa.me/5584988880000?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20orçamento." class="whatsapp-float" aria-label="WhatsApp" target="_blank">
+    <span class="whatsapp-tooltip">Fale conosco!</span>
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741 .981.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- ==========================================
+       MODAL POLÍTICA DE PRIVACIDADE
+       ========================================== -->
+  <div class="modal-overlay" id="privacyModal">
+    <div class="modal">
+      <button class="modal-close" id="closeModal" aria-label="Fechar">&times;</button>
+      <h3>Política de Privacidade (LGPD)</h3>
+      <p>A Vanguard Segurança Eletrônica & Tecnologia está comprometida em proteger a sua privacidade e os seus dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018).</p>
+      <ul>
+        <li><strong>Coleta de Dados:</strong> Coletamos dados apenas para fins de orçamento, contato e execução de projetos de segurança.</li>
+        <li><strong>Imagens de CFTV:</strong> Quando geridas pela Vanguard, as imagens de CFTV são protegidas por criptografia e acessíveis apenas a pessoas autorizadas.</li>
+        <li><strong>Controle de Acesso:</strong> Dados biométricos/faciais são processados localmente nos equipamentos, sem compartilhamento com terceiros.</li>
+        <li><strong>Direitos do Usuário:</strong> Você tem o direito de solicitar acesso, correção ou exclusão de seus dados a qualquer momento pelo e-mail dpo@vanguardseguranca.com.br.</li>
+      </ul>
+      <p>Nenhum dado fornecido nos formulários deste site será vendido, alugado ou repassado a terceiros sem o seu consentimento explícito, exceto por ordem judicial.</p>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       CHATBOT DE INTELIGÊNCIA ARTIFICIAL
+       ========================================== -->
+  <div id="aiChatbotContainer" class="ai-chatbot-container">
+    <div id="aiChatbotWindow" class="ai-chatbot-window">
+      <div class="ai-chatbot-header">
+        <div class="ai-header-info">
+          <div class="ai-avatar">
+            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          </div>
+          <div>
+            <h4>Vanguard IA</h4>
+            <span>Consultor Virtual 24h</span>
+          </div>
+        </div>
+        <button id="closeAiChatBtn" class="ai-close-btn">&times;</button>
+      </div>
+      <div id="aiChatbotMessages" class="ai-chatbot-messages">
+        <div class="ai-message ai-bot">
+          Olá! Sou o consultor virtual da Vanguard. Como posso te ajudar com a segurança da sua empresa ou condomínio hoje?
+        </div>
+      </div>
+      <div class="ai-chatbot-input-area">
+        <form id="aiChatbotForm">
+          <input type="text" id="aiChatbotInput" placeholder="Digite sua dúvida..." autocomplete="off">
+          <button type="submit" id="aiChatbotSendBtn">
+            <svg viewBox="0 0 24 24" width="18" height="18"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+    <button id="aiChatbotFab" class="ai-chatbot-fab" aria-label="Abrir Chat Inteligente">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </button>
+  </div>
+
+  <!-- ==========================================
+       JAVASCRIPT
+       ========================================== -->
+  <script>
+    // ---- Scroll Progress Bar ----
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      document.getElementById('scrollProgress').style.width = pct + '%';
+    });
+
+    // ---- Navbar scroll effect ----
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ---- Mobile menu toggle ----
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+    // Close on link click
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    // ---- Scroll Reveal (IntersectionObserver) ----
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ---- Animated Counter ----
+    function animateCounter(el, target, duration = 1500) {
+      const start = performance.now();
+      const suffix = el.dataset.suffix || '';
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.target.dataset.count) {
+          animateCounter(e.target, parseInt(e.target.dataset.count));
+          e.target.removeAttribute('data-count');
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+    // ---- FAQ Accordion ----
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const isActive = item.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+      if (!isActive) item.classList.add('active');
+    }
+
+    // ---- Scroll Spy Menu ----
+    const sections = document.querySelectorAll('section[id]');
+    const navItems = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    function scrollSpy() {
+      let current = '';
+      const scrollY = window.pageYOffset;
+      sections.forEach(section => {
+        const sectionHeight = section.offsetHeight;
+        const sectionTop = section.offsetTop - 150;
+        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+          current = section.getAttribute('id');
+        }
+      });
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('href').includes(current) && current !== '') {
+          item.classList.add('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', scrollSpy);
+
+    // ---- Mobile Hamburger Animation ----
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+      });
+    });
+
+    // ---- Form Validation ----
+    const formOrcamento = document.getElementById('formOrcamento');
+    const formSuccess = document.getElementById('formSuccess');
+
+    formOrcamento.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let isValid = true;
+      const inputs = formOrcamento.querySelectorAll('input[required], select[required]');
+
+      inputs.forEach(input => {
+        const errorMsg = input.nextElementSibling;
+        if (!input.value.trim()) {
+          input.classList.add('invalid');
+          input.classList.remove('valid');
+          if(errorMsg && errorMsg.classList.contains('form-error')) errorMsg.classList.add('show');
+          isValid = false;
+        } else {
+          input.classList.remove('invalid');
+          input.classList.add('valid');
+          if(errorMsg && errorMsg.classList.contains('form-error')) errorMsg.classList.remove('show');
+        }
+      });
+
+      if (isValid) {
+        // Mocking submit
+        formOrcamento.querySelectorAll('.form-group, .btn-submit').forEach(el => el.style.display = 'none');
+        formSuccess.classList.add('show');
+      }
+    });
+
+    // Remove invalid style on input
+    formOrcamento.querySelectorAll('input, select').forEach(input => {
+      input.addEventListener('input', () => {
+        if(input.classList.contains('invalid')) {
+          input.classList.remove('invalid');
+          const errorMsg = input.nextElementSibling;
+          if(errorMsg && errorMsg.classList.contains('form-error')) errorMsg.classList.remove('show');
+        }
+      });
+    });
+
+    // ---- Privacy Policy Modal ----
+    const privacyModal = document.getElementById('privacyModal');
+    const openModalBtn = document.getElementById('openModal');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    openModalBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      privacyModal.classList.add('active');
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      privacyModal.classList.remove('active');
+    });
+
+    privacyModal.addEventListener('click', (e) => {
+      if (e.target === privacyModal) {
+        privacyModal.classList.remove('active');
+      }
+    });
+
+    // ---- Chatbot IA Logic ----
+    const aiChatbotFab = document.getElementById('aiChatbotFab');
+    const aiChatbotWindow = document.getElementById('aiChatbotWindow');
+    const closeAiChatBtn = document.getElementById('closeAiChatBtn');
+    const aiChatbotForm = document.getElementById('aiChatbotForm');
+    const aiChatbotInput = document.getElementById('aiChatbotInput');
+    const aiChatbotMessages = document.getElementById('aiChatbotMessages');
+    
+    let chatHistory = [];
+
+    // Toggle window
+    aiChatbotFab.addEventListener('click', () => {
+      aiChatbotWindow.classList.toggle('active');
+      if(aiChatbotWindow.classList.contains('active')) {
+        aiChatbotInput.focus();
+      }
+    });
+
+    closeAiChatBtn.addEventListener('click', () => {
+      aiChatbotWindow.classList.remove('active');
+    });
+
+    function appendMessage(text, isUser) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `ai-message ${isUser ? 'ai-user' : 'ai-bot'}`;
+      
+      if (isUser) {
+        msgDiv.textContent = text;
+      } else {
+        msgDiv.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+      }
+      
+      // Inject WhatsApp button if IA mentions WhatsApp
+      if(!isUser && text.toLowerCase().includes('whatsapp')) {
+        const waBtn = document.createElement('a');
+        waBtn.href = "https://wa.me/5584988880000";
+        waBtn.className = "ai-whatsapp-btn";
+        waBtn.target = "_blank";
+        waBtn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741 .981.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Falar no WhatsApp';
+        msgDiv.appendChild(document.createElement('br'));
+        msgDiv.appendChild(waBtn);
+      }
+      
+      aiChatbotMessages.appendChild(msgDiv);
+      aiChatbotMessages.scrollTop = aiChatbotMessages.scrollHeight;
+    }
+
+    function appendLoading() {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `ai-message ai-bot ai-loading`;
+      msgDiv.id = 'aiLoadingBubble';
+      msgDiv.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+      aiChatbotMessages.appendChild(msgDiv);
+      aiChatbotMessages.scrollTop = aiChatbotMessages.scrollHeight;
+    }
+
+    function removeLoading() {
+      const bubble = document.getElementById('aiLoadingBubble');
+      if(bubble) bubble.remove();
+    }
+
+    aiChatbotForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = aiChatbotInput.value.trim();
+      if(!text) return;
+      
+      // User message
+      appendMessage(text, true);
+      chatHistory.push({ role: 'user', content: text });
+      aiChatbotInput.value = '';
+      
+      // Bot loading
+      appendLoading();
+      
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: chatHistory })
+        });
+        
+        removeLoading();
+        
+        if(response.ok) {
+          const data = await response.json();
+          chatHistory.push({ role: 'assistant', content: data.reply });
+          appendMessage(data.reply, false);
+        } else {
+          appendMessage("Desculpe, nosso sistema está indisponível no momento. Por favor, tente pelo WhatsApp.", false);
+        }
+      } catch (err) {
+        removeLoading();
+        appendMessage("Erro de conexão. Por favor, acione-nos via WhatsApp.", false);
+      }
+    });
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</body>
+</html>
